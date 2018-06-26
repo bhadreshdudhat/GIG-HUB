@@ -14,6 +14,7 @@ namespace GIG_HUB.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             var viewModel = new GigsFormViewModel() { Genres = _context.Genres.ToList() };
