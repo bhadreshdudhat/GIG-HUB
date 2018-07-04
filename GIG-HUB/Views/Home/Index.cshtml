@@ -1,30 +1,33 @@
-﻿@model IEnumerable<GIG_HUB.Models.Gig>
+﻿@model GIG_HUB.ViewModels.HomeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
 
 <ul class="gigs">
-    @foreach(var gig in Model)
+    @foreach (var gig in Model.UpcomingGigs)
     {
-    <li>
-        <div class="date">
-            <div class="month">
-                @gig.DateTime.ToString("MMM")
+        <li>
+            <div class="date">
+                <div class="month">
+                    @gig.DateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @gig.DateTime.ToString("d ")
+                </div>
             </div>
-            <div class="day">
-                @gig.DateTime.ToString("d ")
+            <div class="details">
+                <span class="artist">
+                    @gig.Artist.Name
+                </span>
+                <span class="genre">
+                    @gig.Genre.Name
+                </span>
+                @if (Model.ShowActions)
+                {
+                <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendence">Going?</button>
+                }
             </div>
-        </div>
-        <div class="details">
-            <span class="artist">
-                @gig.Artist.Name
-            </span>
-            <span class="genre">
-                @gig.Genre.Name
-            </span>
-            <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right js-toggle-attendence">Going?</button>
-        </div>
-    </li>
+        </li>
     }
 </ul>
 
