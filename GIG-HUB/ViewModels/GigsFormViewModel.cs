@@ -1,7 +1,10 @@
-﻿using GIG_HUB.Models;
+﻿using GIG_HUB.Controllers;
+using GIG_HUB.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 
 namespace GIG_HUB.ViewModels
 {
@@ -31,7 +34,12 @@ namespace GIG_HUB.ViewModels
         {
             get
             {
-                return (Id != 0) ? "Update" : "Create";
+                Expression<Func<GigsController, ActionResult>> update = (c=>c.Update(this));
+                Expression<Func<GigsController, ActionResult>> create = (c=>c.Create(this));
+                var action = (Id != 0) ? update : create;
+                var actionName = (action.Body as MethodCallExpression).Method.Name;
+                return actionName;
+                //return (Id != 0) ? "Update" : "Create";
             }
 
         }
